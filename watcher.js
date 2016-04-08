@@ -70,19 +70,53 @@ Watcher = function(self) {
     });
     self.observer.observe(document, self.config.observerConfig);
   };
-  
-  self.disconnectMutationObserver = function() {
-    observer.disconnect();
-  };
 
   self.setMutationEventListener = function(insertFn, removeFn) {
     self.using = "MutationEvent";
     document.addEventListener("DOMNodeInserted", function(ev) {
-      insertFn(ev);
+      var mutation = {}
+      self.config.onInsert(mutation);
     }, false);
     document.addEventListener("DOMNodeRemoved", function(ev) {
-      removeFn(ev);
+      var mutation = {}
+      self.config.onRemove(mutation);
     }, false);
+
+    document.addEventListener('DOMAttrModified', function(ev) {
+      var mutation = {}
+      self.config.onAlter(mutation);
+    }, false);
+
+    document.addEventListener('DOMAttributeNameChanged', function(ev) {
+      var mutation = {}
+      self.config.onAlter(mutation);
+    }, false);
+
+    document.addEventListener('DOMCharacterDataModified', function(ev) {
+      var mutation = {}
+      self.config.onAlter(mutation);
+    }, false);
+
+    document.addEventListener('DOMElementNameChanged', function(ev) {
+      var mutation = {}
+      self.config.onAlter(mutation);
+    }, false);
+
+    document.addEventListener('DOMNodeInsertedIntoDocument', function(ev) {
+      var mutation = {}
+      self.config.onInsert(mutation);
+    }, false);
+
+    document.addEventListener('DOMNodeRemovedFromDocument', function(ev) {
+      var mutation = {}
+      self.config.onRemove(mutation);
+    }, false);
+
+    document.addEventListener('DOMSubtreeModified', function(ev) {
+      var mutation = {}
+      self.config.onAlter(mutation);
+    }, false);
+
   };
 
   self.setIntervalWatcher = function(intervalFn, intervalPeriod) {
@@ -92,6 +126,15 @@ Watcher = function(self) {
   self.clearIntervalWatcher = function() {
     clearInterval(self.interval);
     self.interval = false;
+  };
+  
+  self.disconnect= function() {
+    switch(self.watching) {
+      case "MutationObserver":
+        self.log('disconnecting MutationObserver.');
+        observer.disconnect();
+        break;
+    }
   };
 
   self.log = function(message, object) {

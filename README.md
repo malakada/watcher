@@ -6,6 +6,8 @@ Watcher is a mutation detection library. It attempts to use the browser's `Mutat
 
 This allows you to react to changes in the HTML DOM of your webpage.
 
+It should be noted that this library won't be useful for very long, as Mutation Events have been deprecated and support for them is slowly dropping. Until then, maybe this will be useful for you.
+
 `MutationObserver` listens for the following types of mutations:
 
 * attribute mutations (attribute)
@@ -37,6 +39,8 @@ You can pass an object into Watcher when you first `init` it. The object can tak
 
 The `onInsert`, `onRemove`, and `onAlter` user-defined methods within the initial config object will all recieve back a `mutation` object. This is just directly piped from the `MutationObserver` object itself. There's a lot of information on this object that can be used for your reaction. If a `MutationObserver` is not being used by the library because it is unavailable to the browser, every attempt has been made to send an object back as identical as possible to `MutationObserver`'s `mutation` object so that you only need to react to one type of data structure.
 
+If you need to disconnect Watch, run `Watcher.disconnect()`.
+
 ### Some `mutation` object properties
 
 |Name|Type|What it do|
@@ -67,3 +71,4 @@ In addition to setting `config.showLogs` to true to enable console logging, you 
 * [David Walsh: Mutation Observer API](https://davidwalsh.name/mutationobserver-api)
 * [Mozilla's blog: DOM MutationObserver](https://hacks.mozilla.org/2012/05/dom-mutationobserver-reacting-to-dom-changes-without-killing-browser-performance/)
 * [MDN: MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+* [MDN: Mutation Events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mutation_events)
