@@ -19,11 +19,11 @@ You can pass an object into Watcher when you first `init` it. The object can tak
 |Name|Type|What it do|Default|
 |---|---|---|---|
 |`showLogs`|boolean|Enables `console.log()` logging.|`false`|
-|`onInsert`|function|Callback to run when the HTML mutation is an insertion.|`function(){}`|
-|`onRemove`|function|Callback to run when the HTML mutation is a removal.|`function(){}`|
-|`onAlter`|function|Callback to run when the HTML mutation is an alteration.|`function(){}`|
+|`onInsert`|function|Callback to run when the HTML mutation is a node insertion.|`function(){}`|
+|`onRemove`|function|Callback to run when the HTML mutation is a node removal.|`function(){}`|
+|`onAlter`|function|Callback to run when the HTML mutation is an alteration of either the attributes or the character data within a node.|`function(){}`|
 |`intervalWatcher`|function|Function to run during every interval check. (Used for final manual watch only.)|`function(){}`|
-|`observerConfig`|`object`||See below.|
+|`observerConfig`|`object`|Configuration object that `MutationObserver` expects. Defaults are provided.|See below.|
 
 `observerConfig` properties:
 |Name|What it do|Default|

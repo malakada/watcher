@@ -24,10 +24,9 @@ Watcher = function(self) {
     self.mergeConfig(config);
 
     if (typeof MutationObserver === 'function' || typeof MutationObserver === 'object') {
-      self.setMutationObserver(self.config.onInsert, self.config.onRemove, self.config.onAlter);
+      self.setMutationObserver();
     } else {
-      self.using = "MutationEvent";
-      //self.setMutationEventListener(self.config.onInsert, self.config.onRemove);
+      self.setMutationEventListener(self.config.onInsert, self.config.onRemove);
       var chatElements = document.querySelectorAll('.enable-chat');
       if (chatElements) {
         for (var i = 0; i < chatElements.length; i++) {
@@ -42,7 +41,7 @@ Watcher = function(self) {
     }*/
   }
 
-  self.setMutationObserver = function(insertFn, removeFn, alterFn) {
+  self.setMutationObserver = function() {
     self.using = "MutationObserver";
     self.observer = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
@@ -54,13 +53,13 @@ Watcher = function(self) {
               self.log('running onInsert function (observer)');
               self.config.onInsert(mutation);
             }
-
             if (mutation.removedNodes.length > 0) {
               self.log('running onRemove function (observer)');
               self.config.onRemove(mutation);
             }
             break;
           case "attributes":
+          case "characterData":
             self.log('running onAlter function (observer)');
             self.config.onAlter(mutation);
             break;
@@ -69,7 +68,6 @@ Watcher = function(self) {
         };
       });
     });
-
     self.observer.observe(document, self.config.observerConfig);
   };
   
@@ -78,6 +76,7 @@ Watcher = function(self) {
   };
 
   self.setMutationEventListener = function(insertFn, removeFn) {
+    self.using = "MutationEvent";
     document.addEventListener("DOMNodeInserted", function(ev) {
       insertFn(ev);
     }, false);
