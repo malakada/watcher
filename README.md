@@ -1,4 +1,6 @@
-# Watchers
+# Watcher
+
+This is still in progress and not ready for use right now.
 
 Watcher is a mutation detection library. It attempts to use the browser's `MutationObserver` if available, if that's not available it'll attempt to use a mutation event listener, and if that's not possible it'll attempt to manually watch for changes. Mutation observers are preferred because they're less intensive on the browser, followed by mutation event listeners, and lastly manually watching for changes. Manually watching for changes is intensive, and may crash the browser.
 
