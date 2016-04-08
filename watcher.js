@@ -24,8 +24,7 @@ Watcher = function(self) {
     self.mergeConfig(config);
 
     if (typeof MutationObserver === 'function' || typeof MutationObserver === 'object') {
-      self.using = "MutationObserver";
-      self.setMutationObserver(self.config.onInsert, self.config.onRemove);
+      self.setMutationObserver(self.config.onInsert, self.config.onRemove, self.config.onAlter);
     } else {
       self.using = "MutationEvent";
       //self.setMutationEventListener(self.config.onInsert, self.config.onRemove);
@@ -43,8 +42,8 @@ Watcher = function(self) {
     }*/
   }
 
-  // Mutation Observer code
-  self.setMutationObserver = function(insertFn, removeFn) {
+  self.setMutationObserver = function(insertFn, removeFn, alterFn) {
+    self.using = "MutationObserver";
     self.observer = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
         self.log(mutation.type, mutation);
