@@ -17,7 +17,7 @@ This allows you to react to changes in the HTML DOM of your webpage.
 You can pass an object into Watcher when you first `init` it. The object can take the following properties:
 
 |Name|Type|What it do|Default|
-|-|-|-|-|
+|---|---|---|---|
 |`showLogs`|boolean|Enables `console.log()` logging.|`false`|
 |`onInsert`|function|Callback to run when the HTML mutation is an insertion.|`function(){}`|
 |`onRemove`|function|Callback to run when the HTML mutation is a removal.|`function(){}`|
@@ -27,7 +27,7 @@ You can pass an object into Watcher when you first `init` it. The object can tak
 
 `observerConfig` properties:
 |Name|What it do|Default|
-|-|-|-|
+|---|---|---|
 |`attributes`||`true`|
 |`childList`||`true`|
 |`characterData`||`true`|
@@ -40,7 +40,7 @@ The `onInsert`, `onRemove`, and `onAlter` user-defined methods within the initia
 ### Some `mutation` object properties
 
 |Name|Type|What it do|
-|-|-|-|
+|---|---|---|
 |`type`|`string`|Indicates what type of mutation occurred. Possible values: `attribute`, `characterData`, `childList`|
 |`target`|`node`|Target node for what was affected.|
 |`addedNodes`|`nodeList`|Returns what nodes were added, if any.|
@@ -56,6 +56,7 @@ The `onInsert`, `onRemove`, and `onAlter` user-defined methods within the initia
 In addition to setting `config.showLogs` to true to enable console logging, you can also call `Watcher.talk()` which will output some basic information about its state:
 
 |Name|What it mean|
+|---|---|
 |`config`|An object of all of the config options currently set for Watcher.|
 |`using`|What type of mutation watching Watcher is using.|
 |`observer`|The observer object Watcher is using.|
