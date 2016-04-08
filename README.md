@@ -64,3 +64,5 @@ In addition to setting `config.showLogs` to true to enable console logging, you 
 ## Useful links
 
 * [David Walsh: Mutation Observer API](https://davidwalsh.name/mutationobserver-api)
+* [Mozilla's blog: DOM MutationObserver](https://hacks.mozilla.org/2012/05/dom-mutationobserver-reacting-to-dom-changes-without-killing-browser-performance/)
+* [MDN: MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)

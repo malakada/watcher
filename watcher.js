@@ -77,7 +77,6 @@ Watcher = function(self) {
     observer.disconnect();
   };
 
-  // Mutation event code (deprecated)
   self.setMutationEventListener = function(insertFn, removeFn) {
     document.addEventListener("DOMNodeInserted", function(ev) {
       insertFn(ev);
@@ -87,7 +86,6 @@ Watcher = function(self) {
     }, false);
   };
 
-  // Interval watcher
   self.setIntervalWatcher = function(intervalFn, intervalPeriod) {
     self.interval = setInterval(intervalFn, intervalPeriod);
   };
@@ -110,7 +108,6 @@ Watcher = function(self) {
     console.log('interval:', self.interval);
   };
 
-  // Doesn't work recursively atm.
   self.mergeConfig = function(a) {
     var c = {};
     
