@@ -73,50 +73,91 @@ Watcher = function(self) {
 
   self.setMutationEventListener = function(insertFn, removeFn) {
     self.using = "MutationEvent";
-    document.addEventListener("DOMNodeInserted", function(ev) {
-      var mutation = {}
+    var mutation = {
+      type: "",
+      addedNode: null,
+      target: null,
+      previousSibling: null,
+      nextSibling: null,
+      attributeName: null,
+      attributeNamespace: null,
+      oldValue: null,
+    };
+
+    document.addEventListener('DOMNodeInserted', function(ev) {
+      mutation.type = 'childList';
+      mutation.addedNode = ev.target;
+      mutation.target = ev.relatedNode;
+      self.log('Event listener for DOMNodeInserted - mutation:', mutation);
+      self.log('Event listener for DOMNodeInserted - event:', ev);
       self.config.onInsert(mutation);
     }, false);
-    document.addEventListener("DOMNodeRemoved", function(ev) {
-      var mutation = {}
+
+    document.addEventListener('DOMNodeRemoved', function(ev) {
+      mutation.type = 'childList';
+      mutation.removedNodes = ev.target;
+      mutation.target = ev.relatedNode;
+      self.log('Event listener for DOMNodeRemoved - mutation:', mutation);
+      self.log('Event listener for DOMNodeRemoved - event:', ev);
       self.config.onRemove(mutation);
     }, false);
 
     document.addEventListener('DOMAttrModified', function(ev) {
-      var mutation = {}
+      mutation.type = 'attribute';
+      mutation.target = ev.target;
+      mutation.attributeName = ev.attrName;
+      mutation.attributeNamespace = ev.relatedNode;
+      mutation.oldValue = ev.prevValue;
+      self.log('Event listener for DOMAttrModified - mutation:', mutation);
+      self.log('Event listener for DOMAttrModified - event:', ev);
       self.config.onAlter(mutation);
     }, false);
 
     document.addEventListener('DOMAttributeNameChanged', function(ev) {
-      var mutation = {}
+      mutation.type = 'attribute';
+      mutation.target = ev.target;
+      mutation.attributeName = ev.attrName;
+      mutation.attributeNamespace = ev.relatedNode;
+      mutation.oldValue = ev.prevValue;
+      self.log('Event listener for DOMAttributeNameChanged - mutation:', mutation);
+      self.log('Event listener for DOMAttributeNameChanged - event:', ev);
       self.config.onAlter(mutation);
     }, false);
 
     document.addEventListener('DOMCharacterDataModified', function(ev) {
-      var mutation = {}
-      self.config.onAlter(mutation);
-    }, false);
-
-    document.addEventListener('DOMElementNameChanged', function(ev) {
-      var mutation = {}
+      mutation.type = 'characterData';
+      mutation.target = ev.target;
+      mutation.oldValue = ev.prevValue;
+      self.log('Event listener for DOMCharacterDataModified - mutation:', mutation);
+      self.log('Event listener for DOMCharacterDataModified - event:', ev);
       self.config.onAlter(mutation);
     }, false);
 
     document.addEventListener('DOMNodeInsertedIntoDocument', function(ev) {
-      var mutation = {}
+      mutation.type = 'childList';
+      mutation.target = ev.relatedNode;
+      mutation.addedNodes = ev.target;
+      self.log('Event listener for DOMNodeInsertedIntoDocument - mutation:', mutation);
+      self.log('Event listener for DOMNodeInsertedIntoDocument - event:', ev);
       self.config.onInsert(mutation);
     }, false);
 
     document.addEventListener('DOMNodeRemovedFromDocument', function(ev) {
-      var mutation = {}
+      mutation.type = 'childList';
+      mutation.target = ev.relatedNode;
+      mutation.removedNodes = ev.target;
+      self.log('Event listener for DOMNodeRemovedFromDocument - mutation:', mutation);
+      self.log('Event listener for DOMNodeRemovedFromDocument - event:', ev);
       self.config.onRemove(mutation);
     }, false);
 
     document.addEventListener('DOMSubtreeModified', function(ev) {
-      var mutation = {}
+      mutation.type = 'childList';
+      mutation.target = ev.target;
+      self.log('Event listener for DOMSubtreeModified - mutation:', mutation);
+      self.log('Event listener for DOMSubtreeModified - event:', ev);
       self.config.onAlter(mutation);
     }, false);
-
   };
 
   self.setIntervalWatcher = function(intervalFn, intervalPeriod) {
